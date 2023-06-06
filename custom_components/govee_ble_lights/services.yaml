@@ -1,0 +1,27 @@
+ble_command:
+  name: Control device via BLE
+  fields:
+    address:
+      name: BLE Address
+      description: BLE Address
+      required: true
+      example: "ce:37:32:32:6e:22"
+      selector:
+        text: {}
+    on_off:
+      name: Toggle device On/Off
+      description: BLE Address
+      required: false
+      example: True
+      selector:
+        boolean: {}
+    brightness:
+      name: Brightness
+      description: Brightness in %
+      required: false
+      example: 50
+      selector:
+        number:
+          min: 1
+          max: 100
+          unit_of_measurement: "%"

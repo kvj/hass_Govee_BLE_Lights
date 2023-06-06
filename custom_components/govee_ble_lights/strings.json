@@ -1,0 +1,13 @@
+{
+  "title": "MQTT Room NG",
+  "config": {
+    "step": {
+      "user": {
+        "title": "New Entry",
+        "data": {
+        }
+      }
+    }
+  }
+}
+  

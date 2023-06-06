@@ -1,0 +1,5 @@
+{
+    "name": "MQTT Room NG",
+    "domains": ["sensor"],
+    "render_readme": true
+}
