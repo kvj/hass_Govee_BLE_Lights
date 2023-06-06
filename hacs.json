@@ -1,5 +1,5 @@
 {
-    "name": "MQTT Room NG",
+    "name": "Govee BLE Lights",
     "domains": ["sensor"],
     "render_readme": true
 }

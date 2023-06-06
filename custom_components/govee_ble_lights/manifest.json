@@ -1,6 +1,6 @@
 {
   "domain": "govee_ble_lights",
-  "name": "govee_ble_lights",
+  "name": "Govee BLE Lights",
   "documentation": "https://github.com/kvj/hass_Govee_BLE_Lights",
   "issue_tracker": "https://github.com/kvj/hass_Govee_BLE_Lights/issues",
   "dependencies": ["bluetooth_adapters"],
