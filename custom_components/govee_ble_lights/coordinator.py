@@ -96,14 +96,19 @@ async def do_exec(hass, address, cmds):
         _LOGGER.debug(f"BLE Device: {ble_device}")
         client = BleakClient(ble_device if ble_device else address, on_disconnected)
         await client.connect()
+        _LOGGER.debug(f"Connected: {ble_device}")
         await client.start_notify(GOVEE_READ_CHAR, on_notify)
         async def send(data):
+            _LOGGER.debug(f"Sending: {data}")
             await client.write_gatt_char(GOVEE_WRITE_CHAR, data, False)
         if "brightness" in cmds:
+            _LOGGER.debug(f"Set brightness: {cmds}")
             await send(_prepare_payload(0x04, [round(float(cmds["brightness"] / 100 * 0xff))]))
         if "on_off" in cmds:
+            _LOGGER.debug(f"Toggle: {cmds}")
             await send(_prepare_payload(0x01, [0x01 if cmds["on_off"] else 0x00]))
         await client.disconnect()
+        _LOGGER.debug(f"do_exec(): Done {ble_device} {cmds}")
     except Exception as e:
         _LOGGER.exception(f"do_exec()")
     pass
