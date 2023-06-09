@@ -32,7 +32,7 @@ class ConfigFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         _LOGGER.debug(f"Input step: {user_input}")
         if user_input is None:
             schema = vol.Schema({
-                vol.Required("name"): cv.string,
+                vol.Required("name", default=self.info["name"]): cv.string,
                 vol.Required("address", default=self.info["address"]): cv.string,
                 vol.Required("model", default=self.info["model"]): cv.string,
             })
