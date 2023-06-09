@@ -1,9 +1,9 @@
 {
-  "title": "Govee BLE Lights",
   "config": {
+    "flow_title": "{name}",
     "step": {
-      "user": {
-        "title": "New Device",
+      "input": {
+        "description": "New Device",
         "data": {
           "name": "Device name (unique)",
           "address": "Bluetooth MAC address",
