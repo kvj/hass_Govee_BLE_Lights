@@ -1,6 +1,6 @@
 from __future__ import annotations
 from .constants import DOMAIN, PLATFORMS
-from .coordinator import DeviceCoordinator, do_exec
+from .coordinator import DeviceCoordinator
 
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.typing import ConfigType
@@ -23,19 +23,31 @@ CONFIG_SCHEMA = vol.Schema({
 }, extra=vol.ALLOW_EXTRA)
 
 async def async_setup_entry(hass: HomeAssistant, entry):
+    data = entry.as_dict()["data"]
+
+    device = DeviceCoordinator(hass, data)
+    hass.data[DOMAIN]["devices"][entry.entry_id] = device
+    await device.coordinator.async_config_entry_first_refresh()
+
     for p in PLATFORMS:
         hass.async_create_task(
             hass.config_entries.async_forward_entry_setup(entry, p)
         )
     return True
 
+async def async_unload_entry(hass: HomeAssistant, entry):
+    for p in PLATFORMS:
+        await hass.config_entries.async_forward_entry_unload(entry, p)
+    hass.data[DOMAIN]["devices"].pop(entry.entry_id)
+    return True
+
+
 async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
-    # hass.data[DOMAIN] = {"coordinator": DeviceCoordinator(hass, {})}
-    devices = config.get(DOMAIN, {}).get("devices", [])
-    _LOGGER.debug(f"async_setup(): devices: {devices}")
+    hass.data[DOMAIN] = {"devices": {}}
 
     async def async_exec(call):
-        await do_exec(hass, call.data["address"], call.data)
+        for entry_id in await service.async_extract_config_entry_ids(hass, call):
+            await hass.data[DOMAIN]["devices"][entry_id].async_exec_cmds(call.data)
 
     hass.services.async_register(DOMAIN, "ble_command", async_exec)
 

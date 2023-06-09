@@ -1,2 +1,2 @@
 DOMAIN = "govee_ble_lights"
-PLATFORMS = []
+PLATFORMS = ["binary_sensor"]

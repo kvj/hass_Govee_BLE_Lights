@@ -1,13 +1,9 @@
 ble_command:
   name: Control device via BLE
+  target:
+    device:
+      integration: govee_ble_lights
   fields:
-    address:
-      name: BLE Address
-      description: BLE Address
-      required: true
-      example: "ce:37:32:32:6e:22"
-      selector:
-        text: {}
     on_off:
       name: Toggle device On/Off
       description: BLE Address
@@ -25,3 +21,69 @@ ble_command:
           min: 1
           max: 100
           unit_of_measurement: "%"
+    color:
+      name: RGB Color
+      description: Static RGB color
+      required: false
+      example: [0x33, 0x66, 0x99]
+      selector:
+        color_rgb:
+    temp:
+      name: Color temperature
+      description: Static white color temperature
+      required: false
+      example: 300
+      selector:
+        color_temp:
+    mask:
+      name: LED Lights mask
+      description: Individual LED mask selector
+      required: false
+      example: "10101011001"
+      selector:
+        text:
+    scene:
+      name: Scene
+      description: Scene name
+      required: false
+      example: Forest
+      selector:
+        text:
+    video:
+      name: TV/Video mode
+      description: TV Backlight mode
+      required: false
+      example: part
+      selector:
+        select:
+          options:
+            - label: Part
+              value: part
+            - label: All
+              value: all
+    music:
+      name: Music mode
+      description: TV mode
+      required: false
+      example: rhytm
+      selector:
+        select:
+          options:
+            - label: Rhytm
+              value: rhytm
+            - label: Energetic
+              value: energetic
+            - label: Spectrum
+              value: spectrum
+            - label: Rolling
+              value: rolling
+    extra:
+      name: Extra mode arguments
+      description: Type, brightness per segment, sensivity, etc.
+      required: false
+      example:
+        mode: game
+        brightness: [100, 50, 100, 50]
+        sound: true
+      selector:
+        object:
